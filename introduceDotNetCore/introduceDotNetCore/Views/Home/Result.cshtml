@@ -1,0 +1,11 @@
+﻿@model UserResponse
+
+@if (Model.IsApproved)
+{
+    <p>Gelmene çok sevindik @Model.Name! Orada Görüşürüz...</p>
+}
+else
+{
+    <p>Bunu duyduğumuza üzüldük :( Bir dahaki sefere!</p>
+}
+

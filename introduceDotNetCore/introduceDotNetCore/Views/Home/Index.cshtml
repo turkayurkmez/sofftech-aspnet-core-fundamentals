@@ -1,0 +1,23 @@
+﻿@model IEnumerable<Product>
+@{
+    Layout = "_Layout";
+}
+
+<h3>Hoşgeldin @ViewBag.Name</h3>
+<p>
+    @if (ViewBag.Hour < 12)
+    {
+        <span>Günaydın</span>
+    }
+    else
+    {
+        <span>İyi günler</span>
+    }
+</p>
+<ul>
+    @foreach (var product in Model)
+    {
+        <li>@product.Name (@product.Price TL) </li>
+    }
+</ul>
+    Davet formunu doldurmak için  <a class="btn btn-success" href="/Home/Response">tıklayınız</a>

@@ -1,0 +1,19 @@
+﻿@model UserResponse
+
+<form asp-action="Response">
+    <input class="form-control" asp-for="Name" placeholder="Adınız" />
+    <span class="form-control alert alert-danger" asp-validation-for="Name"></span>
+    <br />
+    <input asp-for="Email" class="form-control" placeholder="Eposta" />
+    <span asp-validation-for="Email"></span>
+    <br />
+
+
+    <select asp-for="IsApproved" class="form-control">
+        <option value="">Seçiniz</option>
+        <option value="true">Geliyorum</option>
+        <option value="false">Gelmiyorum</option>
+    </select>
+
+    <button type="submit" class="btn btn-danger">Gönder</button>
+</form>
