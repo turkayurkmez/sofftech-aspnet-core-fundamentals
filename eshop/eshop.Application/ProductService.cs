@@ -23,5 +23,10 @@ namespace eshop.Application
 
             return products;
         }
+
+        public List<Product> GetProductsByCategory(string categoryName)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

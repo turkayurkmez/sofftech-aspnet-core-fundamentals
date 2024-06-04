@@ -1,10 +1,20 @@
 using eshop.Application;
+using eshop.Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IProductService, FakeProductService>();
+builder.Services.AddScoped<ICategoryService, FakeCategoryService>();
+
+
+
+var connectionString = builder.Configuration.GetConnectionString("db");
+builder.Services.AddDbContext<EshopDbContext>(option => option.UseSqlServer(connectionString));
+
 
 var app = builder.Build();
 
@@ -23,8 +33,23 @@ app.UseRouting();
 
 app.UseAuthorization();
 
+
+app.MapControllerRoute(
+     name: "category",
+     pattern: "{category?}/Sayfa{page}",
+     defaults: new { controller = "Home", action = "Index", page = 1  }
+    );
+
+app.MapControllerRoute(
+     name:"paging",
+     pattern:"Sayfa{page}",
+     defaults:new {controller = "Home",action="Index", page=1}
+    );
+
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+
 
 app.Run();
