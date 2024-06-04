@@ -1,10 +1,15 @@
-using eshop.Application;
+using DILifeCycleMVC.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddScoped<IProductService, FakeProductService>();
+
+
+builder.Services.AddSingleton<ISingleton, Singleton>();
+builder.Services.AddTransient<ITransient, Transient>();
+builder.Services.AddScoped<IScoped, Scoped>();
+builder.Services.AddTransient<GuidService>();
 
 var app = builder.Build();
 

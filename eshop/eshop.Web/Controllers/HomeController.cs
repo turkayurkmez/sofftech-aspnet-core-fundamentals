@@ -1,4 +1,5 @@
-﻿using eshop.Entities;
+﻿using eshop.Application;
+using eshop.Entities;
 using eshop.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
@@ -9,23 +10,39 @@ namespace eshop.Web.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        private readonly IProductService productService;
+        public HomeController(ILogger<HomeController> logger, IProductService productService)
         {
             _logger = logger;
+            this.productService = productService;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(int page = 1)
         {
-            var products = new List<Product>()
-            {
-                new(){ Id=1, Name="Ürün A", Description="Ürün A Açıklaması", Price=10, Rating=4.6},
-                new(){ Id=2, Name="Ürün B", Description="Ürün B Açıklaması", Price=10, Rating=4.6},
-                new(){ Id=3, Name="Ürün C", Description="Ürün C Açıklaması", Price=10, Rating=4.6},
-                new(){ Id=4, Name="Ürün D", Description="Ürün D Açıklaması", Price=10, Rating=4.6},
-                new(){ Id=5, Name="Ürün E", Description="Ürün E Açıklaması", Price=10, Rating=4.6},
+           // var productService = new FakeProductService();
+            var products = productService.GetProducts();
 
-            };
-            return View(products);
+            var pageSize = 4;
+            var total = products.Count();
+            var pageCount = (int)Math.Ceiling((decimal)total / pageSize);
+
+            /*
+             * 1. sayfada: hiç atlama    4'ü göster
+             * 2. sayfada: ilk 4'ü atla, 4 göster
+             * 3.        : ilk 8'i       4 göster
+             * 
+             */
+
+            //var paginatedProducts = products.Skip((page - 1) * pageSize).Take(pageSize);
+            int startPoint = (page - 1) * pageSize;
+            int endPoint = startPoint + pageSize;
+            var alternative = products.Take(startPoint..endPoint);
+
+            ViewBag.PageCount = pageCount;
+            ViewBag.ActivePage = page;
+
+
+            return View(alternative);
         }
 
         public IActionResult Privacy()

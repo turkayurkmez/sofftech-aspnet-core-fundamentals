@@ -1,16 +1,24 @@
 ﻿@model IEnumerable<Product>
 @{
     ViewData["Title"] = "Home Page";
+    var counter = 0;
+    var className = string.Empty;
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
+    <h1 class="display-4">Hoş geldiniz :)</h1>
     <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
 
-<div class="row">
+<div class="row m-2">
     @foreach (var product in Model)
     {
+        if (counter != 0 && counter % 4 ==0)
+        {
+            @:</div>
+            @:<div class="row m-2">
+
+        }
         <div class="col-3">
             <div class="card">
                 <img src="@product.ImageUrl" class="card-img-top" alt="@product.Name">
@@ -23,5 +31,22 @@
                 </div>
             </div>
         </div>
+        counter++;
     }
+</div>
+
+<div class="row">
+    <div class="col-12">    
+       <ul class="pagination pagination-lg">
+           @for (int pageNo = 1; pageNo <= ViewBag.PageCount; pageNo++)
+            {
+                className = ViewBag.ActivePage == pageNo ? "active" : ""; 
+                <li class="page-item @className"><a class="page-link" asp-action="Index" asp-route-page="@pageNo">@pageNo</a></li>
+            }
+         
+            
+        
+       </ul>
+
+   </div>
 </div>
