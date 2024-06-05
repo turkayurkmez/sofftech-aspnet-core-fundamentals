@@ -32,7 +32,7 @@ namespace eshop.Application
 
             };
         }
-        public List<Product> GetProducts()
+        public IEnumerable<Product> GetProducts()
         {
 
 
@@ -41,9 +41,9 @@ namespace eshop.Application
             return products;
         }
 
-        public List<Product> GetProductsByCategory(string categoryName)
+        public IEnumerable<Product> GetProductsByCategory(string categoryName)
         {
-            return products.Where(p => p.Category.Name.Equals(categoryName)).ToList();
+            return products.Where(p => p.Category.Name.Equals(categoryName));
         }
     }
 }
