@@ -1,4 +1,4 @@
-using eshop.Application;
+﻿using eshop.Application;
 using eshop.Infrastructure.Data;
 using eshop.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -7,11 +7,18 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddSession(opt =>
+{
+    //elbette; tüm option özelliklerinin varsayılan değerleri var
+    opt.IdleTimeout = TimeSpan.FromMinutes(20); 
+});
+
 
 var connectionString = builder.Configuration.GetConnectionString("db");
 builder.Services.AddDbContext<EshopDbContext>(option => option.UseSqlServer(connectionString));
@@ -29,8 +36,8 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
 app.UseRouting();
+app.UseSession();
 
 app.UseAuthorization();
 
