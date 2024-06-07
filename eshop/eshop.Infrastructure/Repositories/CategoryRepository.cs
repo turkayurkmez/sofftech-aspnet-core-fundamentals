@@ -42,6 +42,11 @@ namespace eshop.Infrastructure.Repositories
             throw new NotImplementedException();
         }
 
+        public bool IsExists(int id)
+        {
+            throw new NotImplementedException();
+        }
+
         public void Update(Category entity)
         {
             throw new NotImplementedException();

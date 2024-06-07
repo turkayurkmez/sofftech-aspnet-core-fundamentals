@@ -1,4 +1,5 @@
 ﻿using eshop.Application;
+using eshop.Extensions;
 using eshop.Infrastructure.Data;
 using eshop.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -9,12 +10,18 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllersWithViews();
-builder.Services.AddScoped<IProductService, ProductService>();
-builder.Services.AddScoped<ICategoryService, CategoryService>();
-builder.Services.AddScoped<IProductRepository, ProductRepository>();
-builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
-builder.Services.AddScoped<IUserService, UserService>();
+//builder.Services.AddControllersWithViews();
+//builder.Services.AddScoped<IProductService, ProductService>();
+//builder.Services.AddScoped<ICategoryService, CategoryService>();
+//builder.Services.AddScoped<IProductRepository, ProductRepository>();
+//builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+//builder.Services.AddScoped<IUserService, UserService>();
+//builder.Services.AddDbContext<EshopDbContext>(option => option.UseSqlServer(connectionString));
+
+var connectionString = builder.Configuration.GetConnectionString("db");
+
+
+builder.Services.AddNecessariesForApp(connectionString);
 
 builder.Services.AddSession(opt =>
 {
@@ -32,8 +39,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
                 
 
 
-var connectionString = builder.Configuration.GetConnectionString("db");
-builder.Services.AddDbContext<EshopDbContext>(option => option.UseSqlServer(connectionString));
+
 
 
 var app = builder.Build();
