@@ -41,7 +41,7 @@ namespace eshop.Web.Controllers
             ViewBag.PageCount = pageCount;
             ViewBag.ActivePage = page;
 
-
+            
             return View(alternative);
         }
 

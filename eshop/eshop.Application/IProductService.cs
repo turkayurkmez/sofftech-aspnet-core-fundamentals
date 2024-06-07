@@ -1,4 +1,5 @@
-﻿using eshop.Entities;
+﻿using eshop.Application.DataTransferObject;
+using eshop.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,5 +14,7 @@ namespace eshop.Application
         IEnumerable<Product> GetProductsByCategory(string categoryName);
 
         Product GetProduct(int id);
+        void CreateProduct(CreateProductRequest productRequest);
+        void UpdateProduct(Product product);
     }
 }
